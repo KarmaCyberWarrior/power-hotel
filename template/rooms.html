@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Power hotels: Room</title>
+        <link href="{% static 'css/bootstrap.min.css' %}"  rel="stylesheet">
+        <style></style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container">
+                <a href="{% url 'home' %}" class="navbar-brand">Power Hotels</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href = "{% url 'home' %}" class="nav-link"><p>Home</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href ="{% url 'allroom' %}" class="nav-link"><p>All Rooms</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href ="/#contact" class="nav-link"><p>Contact</p></a>
+                        </li>
+                        
+
+                    </ul>
+                </div>
+            </div>            
+        </nav>
+
+        <section class="bg-dark text-light p-5 text-sm-start">
+            <div class="container">
+                <div class="d-sm-flex align-items-center justify-content-between">
+                    <div>
+                        {% if room.image %}
+                            <img src="{{ room.image.url }}" width="300px" height="200px">
+                        {% endif %}        
+                        <h1>{{ room.name }}</h1>
+                        <p>Description: {{ room.description }}</p>
+                        <p>Cost: ${{ room.costper_night }}</p>
+                        {% if request.method == 'POST' %}
+                            <p>Here's the link for cancelling of room</p>
+                            <a href="cancelroom/{{ room.id }}+3425">cancel room</a>
+                        {% endif %}
+                        
+                    </div>
+                    {% if room.is_booked %}
+                    <p>Room is booked</p>
+
+                    {% else %}
+                    
+                    <form action = " " method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type = "submit" value="Book" class="btn btn-primary btn-md">
+                    </form>
+                    
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        
+        
+        
+        
+
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    </body>
+</html>

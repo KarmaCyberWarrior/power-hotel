@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Power hotels: Rooms</title>
+        <link href="{% static 'css/bootstrap.min.css' %}"  rel="stylesheet">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container">
+                <a href="{% url 'home' %}" class="navbar-brand">Power Hotels</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href = "{% url 'home' %}" class="nav-link"><p>Home</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href ="/#contact" class="nav-link"><p>Contact</p></a>
+                        </li>
+                       
+
+                    </ul>
+                </div>
+            </div>            
+        </nav>
+
+        {% for room in room %}
+        <section class="bg-transparent text-dark p-5 text-sm-start">
+            <div class="container">
+                <div class="d-sm-flex align-items-center justify-content-between">
+                    <div> 
+                        <p class="lead my-4">{{ room.name }}</p>
+                        <p class="lead my-4">{{ room.description }}</p>
+                        <p class="lead my-4">${{ room.costper_night }}</p>
+                         {% if room.is_booked %}   
+                             <p>The room is booked</p>
+                         {% else %}
+                         <a href="{{ room.id }}"><button class="btn btn-primary btn-lg">Book it</button></a>
+                         {% endif %}
+                                               
+                    </div>
+                    {% if room.image %}
+                            <img src="{{ room.image.url }}" class="img-fluid w-50">
+                    {% endif %} 
+                    
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+        
+        
+
+         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    </body>
+</html>
